@@ -67,7 +67,11 @@ class DataClusters(KQueenView):
 
     def handle(self):
         clusters = self.kqueen_request('cluster', 'list', fnkwargs={'all_namespaces': True})
+        from kqueen_ui.config import current_config
+        config = current_config()
         clusters, _, _ = sanitize_resource_metadata(session, clusters, [])
+        # for c in clusters:
+        #     if isinstance(c.provisioner, )
         clusters.sort(key=lambda k: (k['_namespace'], k['created_at'], k['name']))
         data = {
             'response': 200,

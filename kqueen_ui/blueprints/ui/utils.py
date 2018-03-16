@@ -311,6 +311,10 @@ def sanitize_resource_metadata(session, clusters, provisioners):
                     cluster['metadata'][param_name] = '*****************'
                 except KeyError:
                     pass
+        if cluster_engine == 'kqueen.engines.JenkinsEngine':
+            jenkins_build_number = cluster['metadata'].get('build_number')
+            if jenkins_build_number:
+                cluster['metadata']['jenkins_job_url'] = 'mock'
         cluster['metadata'] = OrderedDict(sorted(cluster['metadata'].items(), key=lambda t: t[0]))
 
     # sort provisioners by date
